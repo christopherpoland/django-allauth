@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user_model
 from django.contrib.sites.models import Site
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
@@ -232,7 +232,9 @@ class SocialLogin(object):
         """
         assert not self.is_existing
         user = self.user
-        user.save()
+        existing_user = get_user_model().objects.filter(email=user.email).first()
+        if not existing_user:
+            user.save()
         self.account.user = user
         self.account.save()
         if app_settings.STORE_TOKENS and self.token:
