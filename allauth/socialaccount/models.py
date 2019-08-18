@@ -235,6 +235,8 @@ class SocialLogin(object):
         existing_user = get_user_model().objects.filter(email=user.email).first()
         if not existing_user:
             user.save()
+        else:
+            user = existing_user
         self.account.user = user
         self.account.save()
         if app_settings.STORE_TOKENS and self.token:
