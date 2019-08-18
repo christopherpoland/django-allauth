@@ -234,6 +234,9 @@ class SocialLogin(object):
         user = self.user
         existing_user = get_user_model().objects.filter(email=user.email).first()
         if not existing_user:
+            if not user.is_active:
+                user.is_active = True
+                user.set_unusable_password()
             user.save()
         else:
             user = existing_user
