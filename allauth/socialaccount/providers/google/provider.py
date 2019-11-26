@@ -7,7 +7,6 @@ from allauth.socialaccount.providers.oauth2.provider import OAuth2Provider
 class Scope(object):
     EMAIL = 'email'
     PROFILE = 'profile'
-    DRIVE = 'drive.file'
 
 
 class GoogleAccount(ProviderAccount):
@@ -31,7 +30,14 @@ class GoogleProvider(OAuth2Provider):
         scope = [Scope.PROFILE]
         if QUERY_EMAIL:
             scope.append(Scope.EMAIL)
-        scope.append(Scope.DRIVE)
+        new_scopes = ["https://www.googleapis.com/auth/drive"
+                      ,"https://www.googleapis.com/auth/drive.appdata"
+                      ,"https://www.googleapis.com/auth/drive.file"
+                      ,"https://www.googleapis.com/auth/drive.metadata"
+                      ,"https://www.googleapis.com/auth/drive.metadata.readonly"
+                      ,"https://www.googleapis.com/auth/drive.photos.readonly"
+                      ,"https://www.googleapis.com/auth/drive.readonly"]
+        scope.extend(new_scopes)
         return scope
 
     def get_auth_params(self, request, action):
