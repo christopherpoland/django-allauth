@@ -38,7 +38,7 @@ class SocialTokenAdmin(admin.ModelAdmin):
     raw_id_fields = ('app', 'account',)
     list_display = ('app', 'account', 'truncated_token', 'expires_at')
     list_filter = ('app', 'app__provider', 'expires_at')
-
+    exclude = ['token_secret', ]
     def truncated_token(self, token):
         max_chars = 40
         ret = token.token
