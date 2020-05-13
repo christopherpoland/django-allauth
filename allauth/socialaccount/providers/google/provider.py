@@ -31,8 +31,7 @@ class GoogleProvider(OAuth2Provider):
         if QUERY_EMAIL:
             scope.append(Scope.EMAIL)
         new_scopes = ["https://www.googleapis.com/auth/drive.appdata"
-                      ,"https://www.googleapis.com/auth/drive.file",
-                     "https://www.googleapis.com/auth/drive.readonly"]
+                      ,"https://www.googleapis.com/auth/drive.file"]
         scope.extend(new_scopes)
         return scope
 
